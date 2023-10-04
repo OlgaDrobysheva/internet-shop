@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-a=5)4m$=tg^nrz+akc9sheq@kdz!2sb1ozg-y0==!ek=)otrnm'
+SECRET_KEY = 'django-insecure-k^nl&i5^@dk4l2$#q90*9)2z-&%-e!r!ib_6#5oovh9my57z3k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'market'
     'products',
     'users',
     'orders',
@@ -69,6 +69,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'products.context_processors.category',
+                'cart.context_processors.cart',
+                
             ],
         },
     },
@@ -123,8 +126,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+   os.path.join(BASE_DIR, "static"), 
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = 'products:index'
+LOGIN_URL = 'users:login'
+
+# Base url to serve media files 
+MEDIA_URL = '/media/' 
+
+# Path where media is stored 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# ключ, который будет использоваться для хранения корзины в пользовательском сеансе
+CART_SESSION_ID = 'cart'
